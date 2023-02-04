@@ -1,0 +1,48 @@
+{
+    "compilerOptions": {
+        // Basic Options
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "module": "commonjs",
+        "target": "ES2020",
+        "incremental": true,
+        "pretty": true,
+        "noEmitOnError": true,
+        // Strict Type Checks
+        // "strict": true,
+        // "noImplicitAny": true,
+        // "strictNullChecks": true,
+        // "strictFunctionTypes": true,
+        // "strictBindCallApply": true,
+        // "strictPropertyInitialization": false,
+        // "noImplicitThis": true,
+        // "alwaysStrict": true,
+        // Additional Checks
+        // "noUnusedLocals": true,
+        // "noUnusedParameters": true,
+        // "noImplicitReturns": true,
+        // "noFallthroughCasesInSwitch": true,
+        // Module Resolution
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        // Source Maps
+        "sourceMap": true,
+        // Experimental Options
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        // Other Options
+        "removeComments": true,
+        "declaration": true,
+        "declarationMap": true,
+        "allowSyntheticDefaultImports": true,
+        "allowUnreachableCode": false,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": ["ESNEXT"],
+    },
+  "exclude": ["node_modules", "dist"],
+  "include": [
+    "src/**/*.ts",
+    ".eslintrc.js",
+  ]
+}
