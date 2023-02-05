@@ -1,7 +1,7 @@
 import { ConsumerConfig, ConsumerRunConfig } from 'kafkajs';
 import { CustomRunConfig } from '../interfaces/consumer-config.interface';
 
-export default function defaultKafkaConsumerConfig(
+export function defaultKafkaConsumerConfig(
   customConfig: Partial<ConsumerConfig> = {},
 ): Omit<ConsumerConfig, 'groupId'> {
   return {

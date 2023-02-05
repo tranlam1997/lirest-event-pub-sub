@@ -1,10 +1,10 @@
 import { KafkaConfig, logLevel } from 'kafkajs';
-import brokersFunction from './brokers';
-import authConfig from './auth';
+import { kafkaBrokersConfig } from './brokers';
+import { kafkaAuthConfig } from './auth';
 import { CustomGeneralKafkaConfig, CustomKafkaAuthConfig } from '../interfaces/kafka-config.interface';
 import { WinstonLogCreator } from './logger';
 
-export default function defaultLirestKafkaConfig({
+export function defaultLirestKafkaConfig({
   serverUrl,
   clientId,
   sasl,
@@ -21,7 +21,7 @@ export default function defaultLirestKafkaConfig({
   customKafkaAuthConfig?: CustomKafkaAuthConfig;
 }): KafkaConfig {
   return {
-    brokers: brokersFunction(serverUrl),
+    brokers: kafkaBrokersConfig(serverUrl),
     clientId,
     connectionTimeout: 3000,
     enforceRequestTimeout: false,
@@ -32,6 +32,6 @@ export default function defaultLirestKafkaConfig({
     logLevel: logLevel.ERROR,
     logCreator: WinstonLogCreator,
     ...customGeneralKafkaConfig,
-    ...authConfig({ ...sasl, customKafkaAuthConfig: customKafkaAuthConfig }),
+    ...kafkaAuthConfig({ ...sasl, customKafkaAuthConfig: customKafkaAuthConfig }),
   };
 }

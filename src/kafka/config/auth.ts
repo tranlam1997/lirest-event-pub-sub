@@ -1,8 +1,7 @@
 import { SASLOptions } from "kafkajs";
 import { CustomKafkaAuthConfig } from "../interfaces/kafka-config.interface";
 
-
-export default function kafkaAuthConfig({
+export function kafkaAuthConfig({
   username,
   password,
   customKafkaAuthConfig = {},

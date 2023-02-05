@@ -1,7 +1,7 @@
 import { Consumer, EachMessageHandler } from 'kafkajs';
 import { ProducerRecordMessageHeaders } from '../interfaces/producer-config';
 
-export default function eachMessageHandler(
+export function eachMessageHandler(
   callback: (params: { data: any; metadata: ProducerRecordMessageHeaders }) => Promise<void> | void,
   consumer: Consumer,
 ): EachMessageHandler {

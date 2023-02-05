@@ -6,12 +6,14 @@ import {
   KafkaConfig,
 } from 'kafkajs';
 import { defaultConsumerRunConfig } from './config/consumer';
-import eachBatchHandler from './handlers/batch-handler';
-import eachMessageHandler from './handlers/message-handler';
+import { eachBatchHandler } from './handlers/batch-handler';
+import { eachMessageHandler } from './handlers/message-handler';
 import { ConsumerRunEachBatchConfig, ConsumerRunEachMessageConfig } from './interfaces/consumer-config.interface';
+import { LirestKafkaConfig } from './interfaces/kafka-config.interface';
 import { ProducerRecordMessageHeaders } from './interfaces/producer-config';
+import { LirestKafka } from './kafka';
 
-class LirestKafkaConsumer {
+export class LirestKafkaConsumer {
   private consumer: Consumer;
 
   constructor({ kafka, consumerConfig }: { kafka: Kafka; consumerConfig: ConsumerConfig }) {
@@ -63,16 +65,16 @@ class LirestKafkaConsumer {
   }
 }
 
-export default function createKafkaConsumer({
+export function createKafkaConsumer({
   kafkaConfig,
   consumerConfig = {},
 }: {
-  kafkaConfig: KafkaConfig & { groupId: string };
+  kafkaConfig: LirestKafkaConfig & { groupId: string };
   consumerConfig?: Omit<ConsumerConfig, 'groupId'>;
 }): LirestKafkaConsumer {
   const { groupId, ...config } = kafkaConfig;
   return new LirestKafkaConsumer({
-    kafka: new Kafka(config),
+    kafka: new LirestKafka(config).getKafka(),
     consumerConfig: { groupId, ...consumerConfig },
   });
 }

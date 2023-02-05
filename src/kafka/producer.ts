@@ -7,9 +7,9 @@ import {
 } from 'kafkajs';
 import { LirestKafkaConfig } from './interfaces/kafka-config.interface';
 import { LirestProducerRecord, LirestProducerRecordBatch } from './interfaces/producer-config';
-import LirestKafka from './kafka';
+import { LirestKafka } from './kafka';
 
-class LirestKafkaProducer {
+export class LirestKafkaProducer {
   private producer: Producer;
 
   constructor({ kafka, producerConfig }: { kafka: Kafka; producerConfig: ProducerConfig }) {
@@ -33,7 +33,7 @@ class LirestKafkaProducer {
   }
 }
 
-export default function createKafkaProducer({
+export function createKafkaProducer({
   kafkaConfig,
   producerConfig = {},
 }: {

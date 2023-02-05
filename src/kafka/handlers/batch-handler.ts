@@ -1,7 +1,7 @@
 import { Consumer, EachBatchHandler } from 'kafkajs';
 import { ProducerRecordMessageHeaders } from '../interfaces/producer-config';
 
-export default function eachBatchHandler(
+export function eachBatchHandler(
   callback: (params: { data: any; metadata: ProducerRecordMessageHeaders }) => Promise<void> | void,
   consumer: Consumer,
 ): EachBatchHandler {
@@ -31,7 +31,7 @@ export default function eachBatchHandler(
     try {
       await Promise.all(
         batch.messages.map(async (message) => {
-          if(!isRunning() || isStale()) {
+          if (!isRunning() || isStale()) {
             return;
           }
 
