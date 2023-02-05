@@ -2,21 +2,20 @@ import {
   Consumer,
   ConsumerConfig,
   ConsumerSubscribeTopics,
-  Kafka,
-  KafkaConfig,
+  Kafka as Kafkajs,
 } from 'kafkajs';
 import { defaultConsumerRunConfig } from './config/consumer';
 import { eachBatchHandler } from './handlers/batch-handler';
 import { eachMessageHandler } from './handlers/message-handler';
-import { ConsumerRunEachBatchConfig, ConsumerRunEachMessageConfig } from './interfaces/consumer-config.interface';
-import { LirestKafkaConfig } from './interfaces/kafka-config.interface';
-import { ProducerRecordMessageHeaders } from './interfaces/producer-config';
-import { LirestKafka } from './kafka';
+import { ConsumerRunEachBatchConfig, ConsumerRunEachMessageConfig } from './interfaces/consumer.interface';
+import * as IKafka from './interfaces/kafka.interface';
+import { ProducerRecordMessageHeaders } from './interfaces/producer.interface';
+import { Kafka } from './kafka';
 
-export class LirestKafkaConsumer {
+export class KafkaConsumer {
   private consumer: Consumer;
 
-  constructor({ kafka, consumerConfig }: { kafka: Kafka; consumerConfig: ConsumerConfig }) {
+  constructor({ kafka, consumerConfig }: { kafka: Kafkajs; consumerConfig: ConsumerConfig }) {
     this.consumer = kafka.consumer(consumerConfig);
   }
 
@@ -69,12 +68,12 @@ export function createKafkaConsumer({
   kafkaConfig,
   consumerConfig = {},
 }: {
-  kafkaConfig: LirestKafkaConfig & { groupId: string };
+  kafkaConfig: IKafka.KafkaConfig & { groupId: string };
   consumerConfig?: Omit<ConsumerConfig, 'groupId'>;
-}): LirestKafkaConsumer {
+}): KafkaConsumer {
   const { groupId, ...config } = kafkaConfig;
-  return new LirestKafkaConsumer({
-    kafka: new LirestKafka(config).getKafka(),
+  return new KafkaConsumer({
+    kafka: new Kafka(config).getKafka(),
     consumerConfig: { groupId, ...consumerConfig },
   });
 }

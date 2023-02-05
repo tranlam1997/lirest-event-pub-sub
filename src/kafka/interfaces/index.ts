@@ -1,3 +1,3 @@
-export * from './consumer-config.interface';
-export * from './kafka-config.interface';
-export * from './producer-config';
+export * from './consumer.interface';
+export * from './kafka.interface';
+export * from './producer.interface';

@@ -1,18 +1,19 @@
 import {
   CompressionTypes,
-  Kafka,
+  Kafka as Kafkajs,
   Partitioners,
   Producer,
   ProducerConfig,
 } from 'kafkajs';
-import { LirestKafkaConfig } from './interfaces/kafka-config.interface';
-import { LirestProducerRecord, LirestProducerRecordBatch } from './interfaces/producer-config';
-import { LirestKafka } from './kafka';
+import { producerEventsHandler } from './handlers/producer-events';
+import * as IKafka from './interfaces/kafka.interface';
+import * as IKafkaProducer from './interfaces/producer.interface';
+import { Kafka } from './kafka';
 
-export class LirestKafkaProducer {
+export class KafkaProducer {
   private producer: Producer;
 
-  constructor({ kafka, producerConfig }: { kafka: Kafka; producerConfig: ProducerConfig }) {
+  constructor({ kafka, producerConfig }: { kafka: Kafkajs; producerConfig: ProducerConfig }) {
     this.producer = kafka.producer(producerConfig);
   }
 
@@ -24,12 +25,23 @@ export class LirestKafkaProducer {
     await this.producer.disconnect();
   }
 
-  public async send(data: LirestProducerRecord): Promise<void> {
+  public async send(data: IKafkaProducer.KafkaProducerRecord): Promise<void> {
     await this.producer.send({ ...data, compression: CompressionTypes.GZIP });
   }
 
-  public async sendBatch(data: LirestProducerRecordBatch): Promise<void> {
+  public async sendBatch(data: IKafkaProducer.KafkaProducerRecordBatch): Promise<void> {
     await this.producer.sendBatch({ ...data, compression: CompressionTypes.GZIP });
+  }
+
+  public async on(
+    event: IKafkaProducer.KafkaProducerEvents,
+    callback: (data?: any) => void,
+  ): Promise<void> {
+    producerEventsHandler({
+      event,
+      callback,
+      producer: this.producer,
+    });
   }
 }
 
@@ -37,11 +49,11 @@ export function createKafkaProducer({
   kafkaConfig,
   producerConfig = {},
 }: {
-  kafkaConfig: LirestKafkaConfig;
+  kafkaConfig: IKafka.KafkaConfig;
   producerConfig?: ProducerConfig;
-}): LirestKafkaProducer {
-  return new LirestKafkaProducer({
-    kafka: new LirestKafka(kafkaConfig).getKafka(),
+}): KafkaProducer {
+  return new KafkaProducer({
+    kafka: new Kafka(kafkaConfig).getKafka(),
     producerConfig: {
       createPartitioner: Partitioners.DefaultPartitioner,
       ...producerConfig,

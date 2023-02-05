@@ -23,7 +23,7 @@ export interface CustomGeneralKafkaConfig {
   };
 }
 
-export interface LirestKafkaConfig {
+export interface KafkaConfig {
   serverUrl: string;
   clientId: string;
   sasl: {

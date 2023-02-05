@@ -1,27 +1,23 @@
 import { logLevel } from "kafkajs"
 import winston from "winston"
+import { baseLoggerConfig } from "../../common/winston"
 
 const toWinstonLogLevel = (level: number) => {
   switch (level) {
     case logLevel.ERROR:
     case logLevel.NOTHING:
-      return 'error'
+      return 'error';
     case logLevel.WARN:
-      return 'warn'
+      return 'warn';
     case logLevel.INFO:
-      return 'info'
+      return 'info';
     case logLevel.DEBUG:
-      return 'debug'
+      return 'debug';
   }
 }
 
 export const WinstonLogCreator = (logLevel: number) => {
-  const logger = winston.createLogger({
-    level: toWinstonLogLevel(logLevel),
-    transports: [
-      new winston.transports.Console(),
-    ]
-  })
+  const logger = winston.createLogger(baseLoggerConfig(toWinstonLogLevel(logLevel)));
 
   return ({ namespace, level, label, log }) => {
     const { message, ...extra } = log

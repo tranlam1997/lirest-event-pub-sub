@@ -1,10 +1,10 @@
 import { KafkaConfig, logLevel } from 'kafkajs';
 import { kafkaBrokersConfig } from './brokers';
 import { kafkaAuthConfig } from './auth';
-import { CustomGeneralKafkaConfig, CustomKafkaAuthConfig } from '../interfaces/kafka-config.interface';
+import { CustomGeneralKafkaConfig, CustomKafkaAuthConfig } from '../interfaces/kafka.interface';
 import { WinstonLogCreator } from './logger';
 
-export function defaultLirestKafkaConfig({
+export function defaultKafkaConfig({
   serverUrl,
   clientId,
   sasl,

@@ -1,2 +1,4 @@
+import * as Kafkajs from 'kafkajs';
+
 export * from './kafka';
-export * from 'kafkajs';
+export { Kafkajs };

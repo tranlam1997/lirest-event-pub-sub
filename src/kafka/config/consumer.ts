@@ -1,5 +1,5 @@
 import { ConsumerConfig, ConsumerRunConfig } from 'kafkajs';
-import { CustomRunConfig } from '../interfaces/consumer-config.interface';
+import { CustomRunConfig } from '../interfaces/consumer.interface';
 
 export function defaultKafkaConsumerConfig(
   customConfig: Partial<ConsumerConfig> = {},

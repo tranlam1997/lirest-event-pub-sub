@@ -1,15 +1,15 @@
-import { Kafka } from 'kafkajs';
-import { defaultLirestKafkaConfig } from './config/default';
-import { LirestKafkaConfig } from './interfaces/kafka-config.interface';
+import { Kafka as Kafkajs} from 'kafkajs';
+import { defaultKafkaConfig } from './config/default';
+import * as IKafka from './interfaces/kafka.interface';
 
-export class LirestKafka {
-  private kafka: Kafka;
+export class Kafka {
+  private kafka: Kafkajs;
 
-  constructor(config: LirestKafkaConfig) {
-    this.kafka = new Kafka(defaultLirestKafkaConfig({ ...config }));
+  constructor(config: IKafka.KafkaConfig) {
+    this.kafka = new Kafkajs(defaultKafkaConfig({ ...config }));
   }
 
-  public getKafka(): Kafka {
+  public getKafka(): Kafkajs {
     return this.kafka;
   }
 }

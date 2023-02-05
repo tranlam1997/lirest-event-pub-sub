@@ -1,5 +1,5 @@
 import { SASLOptions } from "kafkajs";
-import { CustomKafkaAuthConfig } from "../interfaces/kafka-config.interface";
+import { CustomKafkaAuthConfig } from "../interfaces/kafka.interface";
 
 export function kafkaAuthConfig({
   username,

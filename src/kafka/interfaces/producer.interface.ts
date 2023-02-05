@@ -1,4 +1,4 @@
-import { Message, ProducerBatch, ProducerRecord, TopicMessages } from 'kafkajs';
+import { Message, ProducerBatch, ProducerRecord, TopicMessages, ProducerEvents } from 'kafkajs';
 
 export type TopDomainName = 'lirest';
 export type ServiceName = Lowercase<`${string}`>; // TODO: add regex
@@ -14,19 +14,21 @@ export interface ProducerRecordMessageHeaders {
   [k: string]: any;
 }
 
-export interface LirestProducerRecordMessage extends Omit<Message, 'headers'> {
+export interface KafkaProducerRecordMessage extends Omit<Message, 'headers'> {
   headers: ProducerRecordMessageHeaders;
 }
 
-export interface LirestProducerRecord extends Omit<ProducerRecord, 'messages' | 'topic'> {
+export interface KafkaProducerRecord extends Omit<ProducerRecord, 'messages' | 'topic'> {
   topic: TopicPattern;
-  messages: LirestProducerRecordMessage[];
+  messages: KafkaProducerRecordMessage[];
 }
 
 export interface ProducerBatchTopicMessages extends Omit<TopicMessages, 'messages'> {
-  messages: LirestProducerRecordMessage[];
+  messages: KafkaProducerRecordMessage[];
 }
 
-export interface LirestProducerRecordBatch extends Omit<ProducerBatch, 'topicMessages'> {
+export interface KafkaProducerRecordBatch extends Omit<ProducerBatch, 'topicMessages'> {
   topicMessages: ProducerBatchTopicMessages[];
 }
+
+export type KafkaProducerEvents = ProducerEvents[keyof ProducerEvents]
