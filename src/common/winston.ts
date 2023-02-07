@@ -7,7 +7,7 @@ const formatInfo = printf(({ level, message, ...metadata }) => {
   >metadata;
   return `[${serviceName.toUpperCase()}] [${namespace.toUpperCase()}] level: ${level}, message: ${message}, timestamp: ${
     metadata.timestamp
-  }, data: ${JSON.stringify(rest)}.`;
+  }, data: ${JSON.stringify(rest.extra)}.`;
 });
 
 export const baseLoggerConfig = (logLevel?: string) =>

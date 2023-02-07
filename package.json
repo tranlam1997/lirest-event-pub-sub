@@ -1,6 +1,6 @@
 {
   "name": "@tranlam1997/lirest-event-pub-sub",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "",
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
