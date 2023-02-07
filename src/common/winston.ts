@@ -5,7 +5,7 @@ const formatInfo = printf(({ level, message, ...metadata }) => {
   const { timestamp, serviceName, namespace, ...rest } = <
     { timestamp: string | Date; serviceName: string; namespace: string; [k: string]: any }
   >metadata;
-  return `[${serviceName}] [${namespace}] level: ${level}, message: ${message}, timestamp: ${
+  return `[${serviceName.toUpperCase()}] [${namespace.toUpperCase()}] level: ${level}, message: ${message}, timestamp: ${
     metadata.timestamp
   }, data: ${JSON.stringify(rest)}.`;
 });
