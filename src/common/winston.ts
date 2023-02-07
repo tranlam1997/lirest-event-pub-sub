@@ -2,14 +2,12 @@ import winston from 'winston';
 
 const { combine, timestamp, printf, json, colorize } = winston.format;
 const formatInfo = printf(({ level, message, ...metadata }) => {
-  const { timestamp, serviceName, ...rest } = <
-    { timestamp: string | Date; serviceName: string; [k: string]: any }
+  const { timestamp, serviceName, namespace, ...rest } = <
+    { timestamp: string | Date; serviceName: string; namespace: string; [k: string]: any }
   >metadata;
-  return `${
-    serviceName ? `[${serviceName.toUpperCase()}]` : ''
-  }level: ${level}, message: ${message}, timestamp: ${metadata.timestamp}, data: ${JSON.stringify(
-    rest,
-  )}.`;
+  return `[${serviceName}] [${namespace}] level: ${level}, message: ${message}, timestamp: ${
+    metadata.timestamp
+  }, data: ${JSON.stringify(rest)}.`;
 });
 
 export const baseLoggerConfig = (logLevel?: string) =>

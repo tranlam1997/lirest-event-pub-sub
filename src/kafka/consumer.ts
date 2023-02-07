@@ -11,7 +11,6 @@ import { ConsumerRunEachBatchConfig, ConsumerRunEachMessageConfig } from './inte
 import * as IKafka from './interfaces/kafka.interface';
 import { ProducerRecordMessageHeaders } from './interfaces/producer.interface';
 import { Kafka } from './kafka';
-import { GeneralKafkaMessages } from './messages/general';
 
 export class KafkaConsumer {
   private consumer: Consumer;
@@ -31,31 +30,23 @@ export class KafkaConsumer {
   }
 
   public async connect(): Promise<void> {
-    this.consumer.logger().info(GeneralKafkaMessages.CONNECTING, this.configInfo)
     await this.consumer.connect();
-    this.consumer.logger().info(GeneralKafkaMessages.CONNECT_SUCCESSFULLY)
   }
 
   public async disconnect(): Promise<void> {
-    this.consumer.logger().info(GeneralKafkaMessages.DISCONNECTING)
     await this.consumer.disconnect();
-    this.consumer.logger().info(GeneralKafkaMessages.DISCONNECT_SUCCESSFULLY)
   }
 
   public async stop(): Promise<void> {
-    this.consumer.logger().info(GeneralKafkaMessages.STOPPING_CONSUMER)
     await this.consumer.stop();
-    this.consumer.logger().info(GeneralKafkaMessages.CONSUMER_STOPPED)
   }
 
   public async pause(topics: Array<{ topic: string; partitions?: number[] }>): Promise<void> {
     this.consumer.pause(topics);
-    this.consumer.logger().info(GeneralKafkaMessages.CONSUMER_PAUSED)
   }
 
   public async resume(topics: Array<{ topic: string; partitions?: number[] }>): Promise<void> {
     this.consumer.resume(topics);
-    this.consumer.logger().info(GeneralKafkaMessages.CONSUMER_RESUMED)
   }
 
   public async subscribe(topics: ConsumerSubscribeTopics): Promise<void> {
@@ -67,7 +58,7 @@ export class KafkaConsumer {
     customConfig: ConsumerRunEachMessageConfig = {},
   ): Promise<void> {
     await this.consumer.run({
-      eachMessage: eachMessageHandler(callback, this.consumer),
+      eachMessage: eachMessageHandler(callback),
       ...defaultConsumerRunConfig(customConfig),
     });
   }
@@ -77,9 +68,17 @@ export class KafkaConsumer {
     customConfig: ConsumerRunEachBatchConfig = {},
   ): Promise<void> {
     await this.consumer.run({
-      eachBatch: eachBatchHandler(callback, this.consumer),
+      eachBatch: eachBatchHandler(callback),
       ...defaultConsumerRunConfig(customConfig),
     });
+  }
+
+  public getConfigInfo(): {
+    server: string;
+    clientId: string;
+    groupId: string;
+  } {
+    return this.configInfo;
   }
 }
 

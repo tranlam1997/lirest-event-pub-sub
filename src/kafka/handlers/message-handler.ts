@@ -1,9 +1,9 @@
-import { Consumer, EachMessageHandler } from 'kafkajs';
+import { EachMessageHandler } from 'kafkajs';
+import { isJsonString } from '../../utils/helper';
 import { ProducerRecordMessageHeaders } from '../interfaces/producer.interface';
 
 export function eachMessageHandler(
   callback: (params: { data: any; metadata: ProducerRecordMessageHeaders }) => Promise<void> | void,
-  consumer: Consumer,
 ): EachMessageHandler {
   return async ({
     topic,
@@ -18,28 +18,14 @@ export function eachMessageHandler(
     heartbeat(): Promise<void>;
     pause(): () => void;
   }) => {
-    consumer.logger().info('Received message', {
-      topic,
-      partition,
-      offset: message.offset,
-      value: message.value.toString('utf8'),
-      metadata: message.headers,
-    });
     try {
       await callback({
-        data: message.value.toString('utf8'),
+        data: isJsonString(message.value.toString('utf8'))
+          ? JSON.parse(message.value.toString('utf8'))
+          : message.value.toString('utf8'),
         metadata: message.headers,
       });
     } catch (err) {
-      consumer.logger().error('Error processing message', {
-        topic,
-        partition,
-        offset: message.offset,
-        value: message.value.toString('utf8'),
-        metadata: message.headers,
-        error: err,
-      });
-
       if (err instanceof Error) {
         const resumeThisPartition = pause();
         // Other partitions that are paused will continue to be paused

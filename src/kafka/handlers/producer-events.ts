@@ -12,7 +12,7 @@ export const producerEvents: ProducerEvents = {
 export function producerEventsHandler({
   event,
   producer,
-  callback
+  callback,
 }: {
   event: KafkaProducerEvents;
   producer: Producer;
@@ -21,30 +21,30 @@ export function producerEventsHandler({
   switch (event) {
     case producerEvents.CONNECT:
       producer.on(producerEvents.CONNECT, () => {
-        producer.logger().info('Connected to Kafka Server');
-        callback()
+        callback();
       });
       break;
     case producerEvents.DISCONNECT:
       producer.on(producerEvents.DISCONNECT, () => {
-        producer.logger().info('Disconnected from Kafka Server');
         callback();
       });
       break;
     case producerEvents.REQUEST:
       producer.on(producerEvents.REQUEST, ({ payload, timestamp }) => {
-        producer.logger().info('Request', { payload, timestamp });
+        callback({ payload, timestamp });
       });
-      callback();
       break;
     case producerEvents.REQUEST_TIMEOUT:
       producer.on(
         producerEvents.REQUEST_TIMEOUT,
         ({ payload: { broker, correlationId, createdAt, sentAt, pendingDuration } }) => {
-          producer
-            .logger()
-            .info('Request timeout', { broker, correlationId, createdAt, sentAt, pendingDuration });
-          callback();
+          callback({
+            broker,
+            correlationId,
+            createdAt,
+            sentAt,
+            pendingDuration,
+          });
         },
       );
       break;

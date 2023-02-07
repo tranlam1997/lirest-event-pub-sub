@@ -23,11 +23,10 @@ export const WinstonLogCreator = (logLevel: number) => {
     const { message, ...extra } = log
     logger.log({
       level: toWinstonLogLevel(level),
-      message: `[${namespace}] ${message}`,
-      extra: {
-        ...extra,
-        serviceName: label,
-      },
+      message,
+      serviceName: 'kafka',
+      namespace,
+      extra
     })
   }
 }
