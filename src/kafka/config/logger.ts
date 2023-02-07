@@ -24,7 +24,10 @@ export const WinstonLogCreator = (logLevel: number) => {
     logger.log({
       level: toWinstonLogLevel(level),
       message: `[${namespace}] ${message}`,
-      extra,
+      extra: {
+        ...extra,
+        serviceName: label,
+      },
     })
   }
 }
