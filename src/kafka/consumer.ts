@@ -3,6 +3,7 @@ import {
   ConsumerConfig,
   ConsumerSubscribeTopics,
   Kafka as Kafkajs,
+  Logger,
 } from 'kafkajs';
 import { defaultConsumerRunConfig } from './config/consumer';
 import { eachBatchHandler } from './handlers/batch-handler';
@@ -79,6 +80,10 @@ export class KafkaConsumer {
     groupId: string;
   } {
     return this.configInfo;
+  }
+
+  public logger(): Logger {
+    return this.consumer.logger();
   }
 }
 

@@ -1,6 +1,7 @@
 import {
   CompressionTypes,
   Kafka as Kafkajs,
+  Logger,
   Partitioners,
   Producer,
   ProducerConfig,
@@ -57,6 +58,10 @@ export class KafkaProducer {
     clientId: string;
   } {
     return this.configInfo;
+  }
+
+  public logger(): Logger {
+    return this.producer.logger();
   }
 }
 
