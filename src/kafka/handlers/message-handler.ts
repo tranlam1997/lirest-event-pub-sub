@@ -18,7 +18,7 @@ export function eachMessageHandler(
     heartbeat(): Promise<void>;
     pause(): () => void;
   }) => {
-    consumer.logger().info('[Kafka-Consumer] Received message', {
+    consumer.logger().info('Received message', {
       topic,
       partition,
       offset: message.offset,
@@ -31,7 +31,7 @@ export function eachMessageHandler(
         metadata: message.headers,
       });
     } catch (err) {
-      consumer.logger().error('[Kafka-Consumer] Error processing message', {
+      consumer.logger().error('Error processing message', {
         topic,
         partition,
         offset: message.offset,

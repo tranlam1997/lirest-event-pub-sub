@@ -23,7 +23,7 @@ export const WinstonLogCreator = (logLevel: number) => {
     const { message, ...extra } = log
     logger.log({
       level: toWinstonLogLevel(level),
-      message,
+      message: `[${namespace}] ${message}`,
       extra,
     })
   }

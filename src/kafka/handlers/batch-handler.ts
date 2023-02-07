@@ -15,7 +15,7 @@ export function eachBatchHandler(
     uncommittedOffsets,
     pause,
   }) {
-    consumer.logger().info('[Kafka-Consumer] Received batch', {
+    consumer.logger().info('Received batch', {
       topic: batch.topic,
       partition: batch.partition,
       highWatermark: batch.highWatermark,
@@ -43,7 +43,7 @@ export function eachBatchHandler(
         }),
       );
     } catch (err) {
-      consumer.logger().error('[Kafka-Consumer] Error processing batch', {
+      consumer.logger().error('Error processing batch', {
         topic: batch.topic,
         partition: batch.partition,
         highWatermark: batch.highWatermark,
