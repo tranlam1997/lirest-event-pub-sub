@@ -24,10 +24,10 @@ export function defaultKafkaConfig({
     brokers: kafkaBrokersConfig(serverUrl),
     clientId,
     connectionTimeout: 3000,
-    enforceRequestTimeout: false,
+    requestTimeout: 25000,
     retry: {
       initialRetryTime: 100,
-      retries: 8,
+      retries: 5,
     },
     logLevel: logLevel.ERROR,
     logCreator: WinstonLogCreator,
