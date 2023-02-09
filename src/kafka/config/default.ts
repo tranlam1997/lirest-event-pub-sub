@@ -29,7 +29,7 @@ export function defaultKafkaConfig({
       initialRetryTime: 100,
       retries: 5,
     },
-    logLevel: logLevel.ERROR,
+    logLevel: logLevel.DEBUG,
     logCreator: WinstonLogCreator,
     ...customGeneralKafkaConfig,
     ...kafkaAuthConfig({ ...sasl, customKafkaAuthConfig: customKafkaAuthConfig }),
