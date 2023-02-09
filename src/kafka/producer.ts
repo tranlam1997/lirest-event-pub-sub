@@ -5,6 +5,7 @@ import {
   Partitioners,
   Producer,
   ProducerConfig,
+  Transaction,
 } from 'kafkajs';
 import { producerEventsHandler } from './handlers/producer-events';
 import * as IKafka from './interfaces/kafka.interface';
@@ -40,6 +41,10 @@ export class KafkaProducer {
 
   public async sendBatch(data: IKafkaProducer.KafkaProducerRecordBatch): Promise<void> {
     await this.producer.sendBatch({ ...data, compression: CompressionTypes.GZIP });
+  }
+
+  public async transaction(): Promise<Transaction> {
+    return await this.producer.transaction();
   }
 
   public async on(
