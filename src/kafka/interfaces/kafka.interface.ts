@@ -1,4 +1,4 @@
-import { BrokersFunction } from 'kafkajs';
+import { BrokersFunction, logLevel } from 'kafkajs';
 
 export interface CustomKafkaAuthConfig {
   authenticationTimeout?: number;
@@ -21,6 +21,7 @@ export interface CustomGeneralKafkaConfig {
     initialRetryTime?: number;
     retries?: number;
   };
+  logLevel?: logLevel;
 }
 
 export interface KafkaConfig {
