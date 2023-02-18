@@ -23,7 +23,7 @@ export function defaultKafkaConfig({
   return {
     brokers: kafkaBrokersConfig(serverUrl),
     clientId,
-    connectionTimeout: 3000,
+    connectionTimeout: 5000,
     requestTimeout: 25000,
     retry: {
       initialRetryTime: 100,

@@ -11,7 +11,7 @@ export function kafkaAuthConfig({
   customKafkaAuthConfig?: CustomKafkaAuthConfig;
 }) {
   return {
-    authenticationTimeout: 1000,
+    authenticationTimeout: 5000,
     reauthenticationThreshold: 10000,
     ssl: true,
     sasl: {
